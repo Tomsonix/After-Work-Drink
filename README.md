@@ -1,4 +1,5 @@
 # After-Work-Drink
+Projekt systemu eksperckiego w Drools'ie
 # Autorzy
 Tomasz Kosmalski 141250
 Adam Krawczyk 141257
