@@ -1,20 +1,51 @@
 package com.sample
+import com.sample.AfterWorkDrink;
+
  
-import com.sample.DroolsTest.Message;
- 
-rule "Hello World"
-    when
-        m : Message( status == Message.HELLO, myMessage : message )
-    then
-        System.out.println( myMessage );
-        m.setMessage( "Goodbye cruel world" );
-        m.setStatus( Message.GOODBYE );
-        update( m );
+declare Pytanie
+   pytanie : String
+   odpowiedzi : Object[]
+   udzielona_odpowiedz : String
+end
+declare Odpowiedz
+	odpowiedz : String
 end
 
-rule "GoodBye"
-    when
-        Message( status == Message.GOODBYE, myMessage : message )
-    then
-        System.out.println( myMessage );
+rule "Init"
+	when
+	then
+		Pytanie p = new Pytanie("Przyk³adowe pytanie?", new Object[]{"Yes","No"},"");
+
+		String answer = AfterWorkDrink.AskQuestion(p.getPytanie(), p.getOdpowiedzi());
+		p.setUdzielona_odpowiedz(answer);
+		insert(p);
+end
+
+rule "SECOND"
+	when
+		p: Pytanie(pytanie == "Przyk³adowe pytanie?", udzielona_odpowiedz == "Yes")
+	then
+		Pytanie p2 = new Pytanie("drugie", new Object[]{"Oczywiœcie","No"},"");
+		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
+		p2.setUdzielona_odpowiedz(answer);
+		insert(p2);
+end
+
+rule "THIRD"
+	when
+		p: Pytanie(pytanie == "drugie", udzielona_odpowiedz == "No")
+	then
+		Pytanie p2 = new Pytanie("trzecie pytanie", new Object[]{"Yes","No"},"");
+		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
+		p2.setUdzielona_odpowiedz(answer);
+		insert(p2);
+end
+
+rule "ODP"
+	when
+		p: Pytanie(pytanie == "trzecie pytanie", udzielona_odpowiedz == "Yes")
+	then
+		Odpowiedz o = new Odpowiedz("Cudowna odpowiedz");
+		insert(o);
+		AfterWorkDrink.ShowAnswer(o.getOdpowiedz());
 end
