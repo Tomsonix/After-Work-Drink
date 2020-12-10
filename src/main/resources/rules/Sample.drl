@@ -9,6 +9,7 @@ declare Pytanie
 end
 declare Odpowiedz
 	odpowiedz : String
+	ikona : String
 end
 
 rule "Init"
@@ -33,7 +34,7 @@ end
 
 rule "THIRD"
 	when
-		p: Pytanie(pytanie == "drugie", udzielona_odpowiedz == "No")
+		p: Pytanie(pytanie == "drugie", udzielona_odpowiedz == "Oczywiœcie")
 	then
 		Pytanie p2 = new Pytanie("trzecie pytanie", new Object[]{"Yes","No"},"");
 		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
@@ -45,7 +46,7 @@ rule "ODP"
 	when
 		p: Pytanie(pytanie == "trzecie pytanie", udzielona_odpowiedz == "Yes")
 	then
-		Odpowiedz o = new Odpowiedz("Cudowna odpowiedz");
+		Odpowiedz o = new Odpowiedz("Cudowna odpowiedz", "icons/martini.jpg");
 		insert(o);
-		AfterWorkDrink.ShowAnswer(o.getOdpowiedz());
+		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getIkona());
 end
