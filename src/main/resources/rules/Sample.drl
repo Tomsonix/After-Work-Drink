@@ -9,44 +9,45 @@ declare Pytanie
 end
 declare Odpowiedz
 	odpowiedz : String
+	opis : String
 	ikona : String
 end
 
-rule "Init"
+rule "Start"
 	when
 	then
-		Pytanie p = new Pytanie("Przyk³adowe pytanie?", new Object[]{"Yes","No"},"");
+		Pytanie p = new Pytanie("Who are you going out for drinks with?", new Object[]{"Your boss","A colleague", "A group", "A client or business contact"},"");
 
 		String answer = AfterWorkDrink.AskQuestion(p.getPytanie(), p.getOdpowiedzi());
 		p.setUdzielona_odpowiedz(answer);
 		insert(p);
 end
 
-rule "SECOND"
+rule "Is it an official functon?"
 	when
-		p: Pytanie(pytanie == "Przyk³adowe pytanie?", udzielona_odpowiedz == "Yes")
+		p: Pytanie(pytanie == "Who are you going out for drinks with?", udzielona_odpowiedz == "A group")
 	then
-		Pytanie p2 = new Pytanie("drugie", new Object[]{"Oczywiœcie","No"},"");
+		Pytanie p2 = new Pytanie("Is it an official functon?", new Object[]{"Yes","No"},"");
 		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
 		p2.setUdzielona_odpowiedz(answer);
 		insert(p2);
 end
 
-rule "THIRD"
+rule "Do you like these people?"
 	when
-		p: Pytanie(pytanie == "drugie", udzielona_odpowiedz == "Oczywiœcie")
+		p: Pytanie(pytanie == "Is it an official functon?", udzielona_odpowiedz == "No")
 	then
-		Pytanie p2 = new Pytanie("trzecie pytanie", new Object[]{"Yes","No"},"");
+		Pytanie p2 = new Pytanie("Do you like these people?", new Object[]{"No","Eh"},"");
 		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
 		p2.setUdzielona_odpowiedz(answer);
 		insert(p2);
 end
 
-rule "ODP"
+rule "5.Fancy cocktail"
 	when
-		p: Pytanie(pytanie == "trzecie pytanie", udzielona_odpowiedz == "Yes")
+		p: Pytanie(pytanie == "Do you like these people?", udzielona_odpowiedz == "No")
 	then
-		Odpowiedz o = new Odpowiedz("Cudowna odpowiedz", "icons/martini.jpg");
+		Odpowiedz o = new Odpowiedz("Fancy cocktail", "Cudowna odpowiedz", "icons/fancy.png");
 		insert(o);
-		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getIkona());
+		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
 end
