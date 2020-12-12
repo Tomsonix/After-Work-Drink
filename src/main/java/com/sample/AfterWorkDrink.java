@@ -29,7 +29,7 @@ public class AfterWorkDrink {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setVisible(true);
             frame.setResizable(false);
-            frame.setSize(600, 600);
+            frame.setSize(800, 600);
 
             Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
             frame.setLocation(dim.width / 2 - frame.getWidth() / 2, dim.height / 2 - frame.getHeight() / 2);
@@ -64,20 +64,20 @@ public class AfterWorkDrink {
     {
     	frame.getContentPane().setBackground(new Color(176, 224, 230));
     	JLabel Icon = new JLabel("");
-    	Icon.setBounds(0, 0, 300, 540);
+    	Icon.setBounds(30, 0, 300, 540);
         Icon.setIcon(new ImageIcon(ikona));
         frame.add(Icon);
         JLabel Text = new JLabel(answer);
         Text.setVerticalAlignment(SwingConstants.CENTER);
-        Text.setFont(new Font("Tahoma", Font.BOLD, 24));
+        Text.setFont(new Font("Tahoma", Font.BOLD, 30));
         Text.setHorizontalAlignment(SwingConstants.CENTER);
-        Text.setBounds(280, 0, 300, 100);
+        Text.setBounds(330, 100, 400, 100);
         frame.add(Text);
-        JLabel Text2 = new JLabel(description);
+        JLabel Text2 = new JLabel("<html>"+description+"</html>");
         Text2.setVerticalAlignment(SwingConstants.TOP);
-        Text2.setFont(new Font("Tahoma", Font.ITALIC, 14));
+        Text2.setFont(new Font("Tahoma",Font.PLAIN, 24));
         Text2.setHorizontalAlignment(SwingConstants.CENTER);
-        Text2.setBounds(280, 100, 300, 300);
+        Text2.setBounds(330, 200, 400, 300);
         frame.add(Text2);
         frame.repaint();
         frame.revalidate();

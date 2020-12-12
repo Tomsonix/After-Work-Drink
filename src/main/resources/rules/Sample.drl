@@ -43,11 +43,58 @@ rule "Do you like these people?"
 		insert(p2);
 end
 
+rule "Can you write this off?"
+	when
+		p: Pytanie(pytanie == "Do you like these people?", udzielona_odpowiedz == "Eh")
+	then
+		Pytanie p2 = new Pytanie("Can you write this off?", new Object[]{"Yes","No"},"");
+		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
+		p2.setUdzielona_odpowiedz(answer);
+		insert(p2);
+end
+
+rule "It's a..."
+	when
+		p: Pytanie(pytanie == "Is it an official functon?", udzielona_odpowiedz == "Yes")
+	then
+		Pytanie p2 = new Pytanie("It's a...", new Object[]{"...performance reward","...holiday party", "...going-away party"},"");
+		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
+		p2.setUdzielona_odpowiedz(answer);
+		insert(p2);
+end
+
+
+
+
+//rule "STOP"
+//	when
+//		p: Pytanie(pytanie == "Can you write this off?", udzielona_odpowiedz == "No")
+//	then
+//		Odpowiedz o = new Odpowiedz("STOP", "Get a life ", "icons/stop.png");
+//		insert(o);
+//		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
+//end
+rule "3.Beer"
+	when
+		p: Pytanie(pytanie == "Can you write this off?", udzielona_odpowiedz == "No")
+	then
+		Odpowiedz o = new Odpowiedz("Beer", "ink ", "icons/beer.png");
+		insert(o);
+		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
+end
 rule "5.Fancy cocktail"
 	when
 		p: Pytanie(pytanie == "Do you like these people?", udzielona_odpowiedz == "No")
 	then
-		Odpowiedz o = new Odpowiedz("Fancy cocktail", "Cudowna odpowiedz", "icons/fancy.png");
+		Odpowiedz o = new Odpowiedz("Fancy cocktail", "A frou-frou (oftentimes sweet) cocktail suggests you'll be ready to wrap it up after a drink or two.<br> A sophisticated choice is Negroni, an Italian drink made of gin, Campari, and vermouth. <br>''It is the perfect cocktail'', says Wilde.", "icons/fancy.png");
+		insert(o);
+		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
+end
+rule "7.Lowball"
+	when
+		p: Pytanie(pytanie == "Can you write this off?", udzielona_odpowiedz == "Yes")
+	then
+		Odpowiedz o = new Odpowiedz("Lowball", "A frou-frou", "icons/lowball.png");
 		insert(o);
 		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
 end
