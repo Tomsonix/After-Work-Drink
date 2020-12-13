@@ -23,11 +23,11 @@ public class AfterWorkDrink {
 	private static int l = 0;
     public static final void main(String[] args) {
     	try {
-    		frame.getContentPane().setBackground(new Color(238, 232, 170));
+    		
             frame.getContentPane().setLayout(null);
             frame.setTitle("After Work Drink");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setVisible(true);
+            
             frame.setResizable(false);
             frame.setSize(800, 600);
 
@@ -79,6 +79,7 @@ public class AfterWorkDrink {
         Text2.setHorizontalAlignment(SwingConstants.CENTER);
         Text2.setBounds(330, 200, 400, 300);
         frame.add(Text2);
+        frame.setVisible(true);
         frame.repaint();
         frame.revalidate();
     }
