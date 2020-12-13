@@ -13,232 +13,209 @@ declare Odpowiedz
 	ikona : String
 end
 
+//Communication with qui
+rule "Ask question"
+	when 
+		p: Pytanie(udzielona_odpowiedz.isEmpty())
+	then
+		String answer = AfterWorkDrink.AskQuestion(p.getPytanie(), p.getOdpowiedzi());
+		p.setUdzielona_odpowiedz(answer);
+		update(p);
+end
+
+rule "Show choice"
+	when
+		o: Odpowiedz()
+	then
+		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
+end
+		
+
+//Questions
 rule "Start"
 	when
 	then
 		Pytanie p = new Pytanie("Who are you going out for drinks with?", new Object[]{"Your boss","A colleague", "A group", "A client or business contact"},"");
-
-		String answer = AfterWorkDrink.AskQuestion(p.getPytanie(), p.getOdpowiedzi());
-		p.setUdzielona_odpowiedz(answer);
 		insert(p);
 end
 
 rule "Is it an official functon?"
 	when
-		p: Pytanie(pytanie == "Who are you going out for drinks with?", udzielona_odpowiedz == "A group")
+		Pytanie(pytanie == "Who are you going out for drinks with?", udzielona_odpowiedz == "A group")
 	then
-		Pytanie p2 = new Pytanie("Is it an official functon?", new Object[]{"Yes","No"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Is it an official functon?", new Object[]{"Yes","No"},"");
+		insert(p);
 end
 
 rule "Do you like these people?"
 	when
-		p: Pytanie(pytanie == "Is it an official functon?", udzielona_odpowiedz == "No")
+		Pytanie(pytanie == "Is it an official functon?", udzielona_odpowiedz == "No")
 	then
-		Pytanie p2 = new Pytanie("Do you like these people?", new Object[]{"No","Eh"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Do you like these people?", new Object[]{"No","Eh"},"");
+		insert(p);
 end
 
 rule "Can you write this off?"
 	when
-		p: Pytanie(pytanie == "Do you like these people?", udzielona_odpowiedz == "Eh")
+		Pytanie(pytanie == "Do you like these people?", udzielona_odpowiedz == "Eh")
 	then
-		Pytanie p2 = new Pytanie("Can you write this off?", new Object[]{"Yes","No"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Can you write this off?", new Object[]{"Yes","No"},"");
+		insert(p);
 end
 
 rule "It's a..."
 	when
-		p: Pytanie(pytanie == "Is it an official functon?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Is it an official functon?", udzielona_odpowiedz == "Yes")
 	then
-		Pytanie p2 = new Pytanie("It's a...", new Object[]{"...performance reward","...holiday party", "...going-away party"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("It's a...", new Object[]{"...performance reward","...holiday party", "...going-away party"},"");
+		insert(p);
 end
 
 rule "Is this a major celebration?"
 	when
-		p: Pytanie(pytanie == "It's a...", udzielona_odpowiedz == "...performance reward")
+		Pytanie(pytanie == "It's a...", udzielona_odpowiedz == "...performance reward")
 	then
-		Pytanie p2 = new Pytanie("Is this a major celebration?", new Object[]{"Yes","No"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Is this a major celebration?", new Object[]{"Yes","No"},"");
+		insert(p);
 end
 
 rule "Can you comfortably get wasted?"
 	when
-		p: Pytanie(pytanie == "Is this a major celebration?", udzielona_odpowiedz == "Yes") or Pytanie(pytanie == "It's a...", udzielona_odpowiedz == "...holiday party")
+		Pytanie(pytanie == "Is this a major celebration?", udzielona_odpowiedz == "Yes") or Pytanie(pytanie == "It's a...", udzielona_odpowiedz == "...holiday party")
 	then
-		Pytanie p2 = new Pytanie("Can you comfortably get wasted?", new Object[]{"Yes","No"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Can you comfortably get wasted?", new Object[]{"Yes","No"},"");
+		insert(p);
 end
 
 rule "Is it a Friday night?"
 	when
-		p: Pytanie(pytanie == "Can you comfortably get wasted?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Can you comfortably get wasted?", udzielona_odpowiedz == "Yes")
 	then
-		Pytanie p2 = new Pytanie("Is it a Friday night?", new Object[]{"Yes","No"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Is it a Friday night?", new Object[]{"Yes","No"},"");
+		insert(p);
 end
 rule "Are you planning on working here for a long time?"
 	when
-		p: Pytanie(pytanie == "Is it a Friday night?", udzielona_odpowiedz == "No")
+		Pytanie(pytanie == "Is it a Friday night?", udzielona_odpowiedz == "No")
 	then
-		Pytanie p2 = new Pytanie("Are you planning on working here for a long time?", new Object[]{"Yes","No"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Are you planning on working here for a long time?", new Object[]{"Yes","No"},"");
+		insert(p);
 end
 
 rule "Do you like this person?"
 	when
-		p: Pytanie(pytanie == "It's a...", udzielona_odpowiedz == "...going-away party")
+		Pytanie(pytanie == "It's a...", udzielona_odpowiedz == "...going-away party")
 	then
-		Pytanie p2 = new Pytanie("Do you like this person?", new Object[]{"Yes","No"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Do you like this person?", new Object[]{"Yes","No"},"");
+		insert(p);
 end
 rule "Are you schmoozing to stay on this person's radar?"
 	when
-		p: Pytanie(pytanie == "Do you like this person?", udzielona_odpowiedz == "No")
+		Pytanie(pytanie == "Do you like this person?", udzielona_odpowiedz == "No")
 	then
-		Pytanie p2 = new Pytanie("Are you schmoozing to stay on this person's radar?", new Object[]{"Yes","No"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Are you schmoozing to stay on this person's radar?", new Object[]{"Yes","No"},"");
+		insert(p);
 end
 rule "Do you have a life?"
 	when
-		p: Pytanie(pytanie == "Are you schmoozing to stay on this person's radar?", udzielona_odpowiedz == "No")
+		Pytanie(pytanie == "Are you schmoozing to stay on this person's radar?", udzielona_odpowiedz == "No")
 	then
-		Pytanie p2 = new Pytanie("Do you have a life?", new Object[]{"Yes","No"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Do you have a life?", new Object[]{"Yes","No"},"");
+		insert(p);
 end
 rule "You aren't being honest. Try again."
 	when
-		p: Pytanie(pytanie == "Do you have a life?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Do you have a life?", udzielona_odpowiedz == "Yes")
 	then
-		Pytanie p2 = new Pytanie("You aren't being honest. Try again.", new Object[]{"Next"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("You aren't being honest. Try again.", new Object[]{"Next"},"");
+		insert(p);
 end
 rule "Is he or she a big drinker?"
 	when
-		p: Pytanie(pytanie == "Are you schmoozing to stay on this person's radar?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Are you schmoozing to stay on this person's radar?", udzielona_odpowiedz == "Yes")
 	then
-		Pytanie p2 = new Pytanie("Is he or she a big drinker?", new Object[]{"Yes","No"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Is he or she a big drinker?", new Object[]{"Yes","No"},"");
+		insert(p);
 end
 rule "Are they Mormon?"
 	when
-		p: Pytanie(pytanie == "Is he or she a big drinker?", udzielona_odpowiedz == "No")
+		Pytanie(pytanie == "Is he or she a big drinker?", udzielona_odpowiedz == "No")
 	then
-		Pytanie p2 = new Pytanie("Are they Mormon?", new Object[]{"Yes","No"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Are they Mormon?", new Object[]{"Yes","No"},"");
+		insert(p);
 end
 rule "Do you feel obligated to keep up with this person?"
 	when
-		p: Pytanie(pytanie == "Is he or she a big drinker?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Is he or she a big drinker?", udzielona_odpowiedz == "Yes")
 	then
-		Pytanie p2 = new Pytanie("Do you feel obligated to keep up with this person?", new Object[]{"Yes","No"},"");
-		String answer = AfterWorkDrink.AskQuestion(p2.getPytanie(), p2.getOdpowiedzi());
-		p2.setUdzielona_odpowiedz(answer);
-		insert(p2);
+		Pytanie p = new Pytanie("Do you feel obligated to keep up with this person?", new Object[]{"Yes","No"},"");
+		insert(p);
 end
 
 
 
 
-
+//Answers
 rule "STOP"
 	when
-		p: Pytanie(pytanie == "Do you have a life?", udzielona_odpowiedz == "No") or Pytanie(pytanie == "You aren't being honest. Try again.", udzielona_odpowiedz == "Next")
+		Pytanie(pytanie == "Do you have a life?", udzielona_odpowiedz == "No") or Pytanie(pytanie == "You aren't being honest. Try again.", udzielona_odpowiedz == "Next")
 	then
 		Odpowiedz o = new Odpowiedz("Get a life", "", "icons/stop.png");
 		insert(o);
-		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
 end
 rule "1.Martini"
 	when
-		p: Pytanie(pytanie == "Is it a Friday night?", udzielona_odpowiedz == "Yes") or Pytanie(pytanie == "Are you planning on working here for a long time?", udzielona_odpowiedz == "No")
+		Pytanie(pytanie == "Is it a Friday night?", udzielona_odpowiedz == "Yes") or Pytanie(pytanie == "Are you planning on working here for a long time?", udzielona_odpowiedz == "No")
 	then
 		Odpowiedz o = new Odpowiedz("Martini", "opis", "icons/martini.png");
 		insert(o);
-		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
 end
 rule "2.Wine"
 	when
-		p: Pytanie(pytanie == "Can you comfortably get wasted?", udzielona_odpowiedz == "No") or Pytanie(pytanie == "Are they Mormon?", udzielona_odpowiedz == "No")
+		Pytanie(pytanie == "Can you comfortably get wasted?", udzielona_odpowiedz == "No") or Pytanie(pytanie == "Are they Mormon?", udzielona_odpowiedz == "No")
 	then
 		Odpowiedz o = new Odpowiedz("Wine", "opis", "icons/wine.png");
 		insert(o);
-		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
 end
 rule "3.Beer"
 	when
-		p: Pytanie(pytanie == "Can you write this off?", udzielona_odpowiedz == "No")
+		Pytanie(pytanie == "Can you write this off?", udzielona_odpowiedz == "No")
 	then
 		Odpowiedz o = new Odpowiedz("Beer", "opis", "icons/beer.png");
 		insert(o);
-		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
 end
 rule "4.Bubbly"
 	when
-		p: Pytanie(pytanie == "Are you planning on working here for a long time?", udzielona_odpowiedz == "Yes") or Pytanie(pytanie == "Do you like this person?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Are you planning on working here for a long time?", udzielona_odpowiedz == "Yes") or Pytanie(pytanie == "Do you like this person?", udzielona_odpowiedz == "Yes")
 	then
 		Odpowiedz o = new Odpowiedz("Bubbly", "opis", "icons/bubbly.png");
 		insert(o);
-		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
 end
 rule "5.Fancy cocktail"
 	when
-		p: Pytanie(pytanie == "Do you like these people?", udzielona_odpowiedz == "No") or Pytanie(pytanie == "Do you feel obligated to keep up with this person?", udzielona_odpowiedz == "No")
+		Pytanie(pytanie == "Do you like these people?", udzielona_odpowiedz == "No") or Pytanie(pytanie == "Do you feel obligated to keep up with this person?", udzielona_odpowiedz == "No")
 	then
 		Odpowiedz o = new Odpowiedz("Fancy cocktail", "A frou-frou (oftentimes sweet) cocktail suggests you'll be ready to wrap it up after a drink or two.<br> A sophisticated choice is Negroni, an Italian drink made of gin, Campari, and vermouth. <br>''It is the perfect cocktail'', says Wilde.", "icons/fancy.png");
 		insert(o);
-		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
 end
 rule "6.Highball"
 	when
-		p: Pytanie(pytanie == "Is this a major celebration?", udzielona_odpowiedz == "No") or Pytanie(pytanie == "Do you feel obligated to keep up with this person?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Is this a major celebration?", udzielona_odpowiedz == "No") or Pytanie(pytanie == "Do you feel obligated to keep up with this person?", udzielona_odpowiedz == "Yes")
 	then
 		Odpowiedz o = new Odpowiedz("Highball", "opis", "icons/highball.png");
 		insert(o);
-		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
 end
 rule "7.Lowball"
 	when
-		p: Pytanie(pytanie == "Can you write this off?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Can you write this off?", udzielona_odpowiedz == "Yes")
 	then
 		Odpowiedz o = new Odpowiedz("Lowball", "opis", "icons/lowball.png");
 		insert(o);
-		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
 end
 rule "8.Non-Alcoholic"
 	when
-		p: Pytanie(pytanie == "Are they Mormon?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Are they Mormon?", udzielona_odpowiedz == "Yes")
 	then
 		Odpowiedz o = new Odpowiedz("Non-Alcoholic", "opis", "icons/non-alco.png");
 		insert(o);
-		AfterWorkDrink.ShowAnswer(o.getOdpowiedz(), o.getOpis(), o.getIkona());
 end
