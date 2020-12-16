@@ -394,7 +394,7 @@ rule "2.Wine"
 		Pytanie(pytanie == "Will you talk back?", udzielona_odpowiedz == "No") or
 		Pytanie(pytanie == "Is he or she trying to sleep with you?", udzielona_odpowiedz == "No")
 	then
-		Odpowiedz o = new Odpowiedz("Wine", "Wine is an agenda-free order - unless you order an expensive bottle. If you want to appear of-the-moment, opt for a white or red Austrian wine, suggests Boelte:\"The reds are parallel to Burgundian ones, and the whites to German ones\".", "icons/wine.png");
+		Odpowiedz o = new Odpowiedz("Wine", "Wine is an agenda-free order - unless you order an expensive bottle. If you want to appear of-the-moment, opt for a white or red Austrian wine, suggests Boelte: \"The reds are parallel to Burgundian ones, and the whites to German ones\".", "icons/wine.png");
 		insert(o);
 end
 rule "3.Beer"
@@ -425,7 +425,7 @@ rule "5.Fancy cocktail"
 		Pytanie(pytanie == "Is this a girls' night?", udzielona_odpowiedz == "Yes") or
 		Pytanie(pytanie == "Are you sure this is a good idea?", udzielona_odpowiedz == "Yes")
 	then
-		Odpowiedz o = new Odpowiedz("Fancy cocktail", "A frou-frou (oftentimes sweet) cocktail suggests you'll be ready to wrap it up after a drink or two.<br> A sophisticated choice is Negroni, an Italian drink made of gin, Campari, and vermouth. <br>\"It is the perfect cocktail\", says Wilde.", "icons/fancy.png");
+		Odpowiedz o = new Odpowiedz("Fancy cocktail", "A frou-frou (oftentimes sweet) cocktail suggests you'll be ready to wrap it up after a drink or two. A sophisticated choice is Negroni, an Italian drink made of gin, Campari, and vermouth. \"It is the perfect cocktail\", says Wilde.", "icons/fancy.png");
 		insert(o);
 end
 rule "6.Highball"
