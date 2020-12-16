@@ -275,15 +275,101 @@ rule "Is this a girls' night?"
 		insert(p);
 end;	
 
+rule "Did he or she ask you to drinks?"
+	when
+		Pytanie(pytanie == "Who are you going out for drinks with?", udzielona_odpowiedz == "Your boss")
+	then
+		Pytanie p = new Pytanie("Did he or she ask you to drinks?", new Object[] {"Yes", "No"}, "");
+		insert(p);
+end;
+
+rule "Are you celebrating something?"
+	when
+		Pytanie(pytanie == "Did he or she ask you to drinks?", udzielona_odpowiedz == "Yes")
+	then
+		Pytanie p = new Pytanie("Are you celebrating something?", new Object[] {"Yes", "No"}, "");
+		insert(p);
+end;
+
+rule "Are you worried you're in trouble?"
+	when
+		Pytanie(pytanie == "Are you celebrating something?", udzielona_odpowiedz == "No")
+	then
+		Pytanie p = new Pytanie("Are you worried you're in trouble?", new Object[] {"Yes", "No"}, "");
+		insert(p);
+end;
+
+rule "Will you talk back?"
+	when
+		Pytanie(pytanie == "Are you worried you're in trouble?", udzielona_odpowiedz == "Yes")
+	then
+		Pytanie p = new Pytanie("Will you talk back?", new Object[] {"Yes", "No"}, "");
+		insert(p);
+end;
+
+rule "Is he or she trying to sleep with you?"
+	when
+		Pytanie(pytanie == "Are you worried you're in trouble?", udzielona_odpowiedz == "No") or
+		Pytanie(pytanie == "Are you trying to seduce your boss?", udzielona_odpowiedz == "No")
+	then
+		Pytanie p = new Pytanie("Is he or she trying to sleep with you?", new Object[] {"Yes", "No"}, "");
+		insert(p);
+end;
+
+rule "Are you asking for a raise?"
+	when
+		Pytanie(pytanie == "Did he or she ask you to drinks?", udzielona_odpowiedz == "No")
+	then
+		Pytanie p = new Pytanie("Are you asking for a raise?", new Object[] {"Yes", "No"}, "");
+		insert(p);
+end;
+
+rule "Just a promotion?"
+	when
+		Pytanie(pytanie == "Are you asking for a raise?", udzielona_odpowiedz == "No")
+	then
+		Pytanie p = new Pytanie("Just a promotion?", new Object[] {"Yes", "No"}, "");
+		insert(p);
+end;
+
+rule "Are you trying to seduce your boss?"
+	when
+		Pytanie(pytanie == "Just a promotion?", udzielona_odpowiedz == "No")
+	then
+		Pytanie p = new Pytanie("Are you trying to seduce your boss?", new Object[] {"Yes", "No"}, "");
+		insert(p);
+end;
+
+rule "Are you sure this is a good idea?"
+	when
+		Pytanie(pytanie == "Are you trying to seduce your boss?", udzielona_odpowiedz == "Yes")
+	then
+		Pytanie p = new Pytanie("Are you sure this is a good idea?", new Object[] {"Yes", "No"}, "");
+		insert(p);
+end;
+
+
+
+
+
+
 
 
 //Answers
-rule "STOP"
+rule "STOP1"
 	when
 		Pytanie(pytanie == "Do you have a life?", udzielona_odpowiedz == "No") or
 		Pytanie(pytanie == "You aren't being honest. Try again.", udzielona_odpowiedz == "Next")
 	then
 		Odpowiedz o = new Odpowiedz("Get a life", "", "icons/stop.png");
+		insert(o);
+end
+rule "STOP2"
+	when
+		Pytanie(pytanie == "Are you asking for a raise?", udzielona_odpowiedz == "Yes") or
+		Pytanie(pytanie == "Just a promotion?", udzielona_odpowiedz == "Yes")
+	then
+		Odpowiedz o = new Odpowiedz("Do this in the office", "", "icons/stop.png");
 		insert(o);
 end
 rule "1.Martini"
@@ -292,9 +378,10 @@ rule "1.Martini"
 		Pytanie(pytanie == "Are you planning on working here for a long time?", udzielona_odpowiedz == "No") or
 		Pytanie(pytanie == "Do you have to take them to dinner after?", udzielona_odpowiedz == "Yes") or
 		Pytanie(pytanie == "Is he or she a crier?", udzielona_odpowiedz == "Yes") or
-		Pytanie(pytanie == "Are you about to get fired?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Are you about to get fired?", udzielona_odpowiedz == "Yes") or
+		Pytanie(pytanie == "Are you sure this is a good idea?", udzielona_odpowiedz == "No")
 	then
-		Odpowiedz o = new Odpowiedz("Martini", "opis", "icons/martini.png");
+		Odpowiedz o = new Odpowiedz("Martini", "\"Someone who orders a vodka martini has an agenda\", says New York mixologist Damon Boelte, \"and that is to get drunk\". Perhaps that's why the one thing bartenders all agree on is that a proper martini is made with gin, not vodka.", "icons/martini.png");
 		insert(o);
 end
 rule "2.Wine"
@@ -303,9 +390,11 @@ rule "2.Wine"
 		Pytanie(pytanie == "Are they Mormon?", udzielona_odpowiedz == "No") or
 		Pytanie(pytanie == "Do you have to take them to dinner after?", udzielona_odpowiedz == "No") or 
 		Pytanie(pytanie == "Can this person handle the truth?", udzielona_odpowiedz == "Yes") or
-		Pytanie(pytanie == "Can this person help you?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Can this person help you?", udzielona_odpowiedz == "Yes") or
+		Pytanie(pytanie == "Will you talk back?", udzielona_odpowiedz == "No") or
+		Pytanie(pytanie == "Is he or she trying to sleep with you?", udzielona_odpowiedz == "No")
 	then
-		Odpowiedz o = new Odpowiedz("Wine", "opis", "icons/wine.png");
+		Odpowiedz o = new Odpowiedz("Wine", "Wine is an agenda-free order - unless you order an expensive bottle. If you want to appear of-the-moment, opt for a white or red Austrian wine, suggests Boelte:\"The reds are parallel to Burgundian ones, and the whites to German ones\".", "icons/wine.png");
 		insert(o);
 end
 rule "3.Beer"
@@ -315,15 +404,16 @@ rule "3.Beer"
 		Pytanie(pytanie == "Can this be expensed as work drinks?", udzielona_odpowiedz == "No") or
 		Pytanie(pytanie == "Is this a girls' night?", udzielona_odpowiedz == "No")
 	then
-		Odpowiedz o = new Odpowiedz("Beer", "opis", "icons/beer.png");
+		Odpowiedz o = new Odpowiedz("Beer", "Grabbing beers is a friendly gesture. Resist a Bud Lite and choose a local microbrew. \"The local beer scene is popping off all around the country\", says mixologist Jayson Wilde of San Francisco's Bourbon & Branch.", "icons/beer.png");
 		insert(o);
 end
 rule "4.Bubbly"
 	when
 		Pytanie(pytanie == "Are you planning on working here for a long time?", udzielona_odpowiedz == "Yes") or
-		Pytanie(pytanie == "Do you like this person?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Do you like this person?", udzielona_odpowiedz == "Yes") or
+		Pytanie(pytanie == "Are you celebrating something?", udzielona_odpowiedz == "Yes")
 	then
-		Odpowiedz o = new Odpowiedz("Bubbly", "opis", "icons/bubbly.png");
+		Odpowiedz o = new Odpowiedz("Bubbly", "When celebrating with a sparkler, Boelte says to choose a \"grower\" champagne such as Egly-Ouriet. These smaller-batch, farmer wines of great quality are value-driven, so this choice will also save your expense account.", "icons/bubbly.png");
 		insert(o);
 end
 rule "5.Fancy cocktail"
@@ -332,9 +422,10 @@ rule "5.Fancy cocktail"
 		Pytanie(pytanie == "Do you feel obligated to keep up with this person?", udzielona_odpowiedz == "No") or
 		Pytanie(pytanie == "Is your expense account big?", udzielona_odpowiedz == "No") or
 		Pytanie(pytanie == "Is he or she a crier?", udzielona_odpowiedz == "No") or
-		Pytanie(pytanie == "Is this a girls' night?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Is this a girls' night?", udzielona_odpowiedz == "Yes") or
+		Pytanie(pytanie == "Are you sure this is a good idea?", udzielona_odpowiedz == "Yes")
 	then
-		Odpowiedz o = new Odpowiedz("Fancy cocktail", "A frou-frou (oftentimes sweet) cocktail suggests you'll be ready to wrap it up after a drink or two.<br> A sophisticated choice is Negroni, an Italian drink made of gin, Campari, and vermouth. <br>''It is the perfect cocktail'', says Wilde.", "icons/fancy.png");
+		Odpowiedz o = new Odpowiedz("Fancy cocktail", "A frou-frou (oftentimes sweet) cocktail suggests you'll be ready to wrap it up after a drink or two.<br> A sophisticated choice is Negroni, an Italian drink made of gin, Campari, and vermouth. <br>\"It is the perfect cocktail\", says Wilde.", "icons/fancy.png");
 		insert(o);
 end
 rule "6.Highball"
@@ -343,7 +434,7 @@ rule "6.Highball"
 		Pytanie(pytanie == "Do you feel obligated to keep up with this person?", udzielona_odpowiedz == "Yes") or
 		Pytanie(pytanie == "Will this morph into a bitchfest?", udzielona_odpowiedz == "No")
 	then
-		Odpowiedz o = new Odpowiedz("Highball", "opis", "icons/highball.png");
+		Odpowiedz o = new Odpowiedz("Highball", "If you're in it for the long haul, try an alcohol base with a non-alcohol mixer, like a traditional gin and tonic. Just avoid rum or Jack and Cokes. \"They're what teenagers drink\", says Wilde. \"They're like the macaroni and cheese of booze\".", "icons/highball.png");
 		insert(o);
 end
 rule "7.Lowball"
@@ -352,13 +443,15 @@ rule "7.Lowball"
 		Pytanie(pytanie == "Is this a performance warning?", udzielona_odpowiedz == "No") or
 		Pytanie(pytanie == "Is your companion male?", udzielona_odpowiedz == "Yes");
 	then
-		Odpowiedz o = new Odpowiedz("Lowball", "opis", "icons/lowball.png");
+		Odpowiedz o = new Odpowiedz("Lowball", "Scotch and bourbon on the rocks are popular among men, so ordering one as a women is a \"total power move\", says Boelte. Asking if there are smaller-batch spirits behind the bar is a power move for any gender.", "icons/lowball.png");
 		insert(o);
 end
 rule "8.Non-Alcoholic"
 	when
-		Pytanie(pytanie == "Are they Mormon?", udzielona_odpowiedz == "Yes")
+		Pytanie(pytanie == "Are they Mormon?", udzielona_odpowiedz == "Yes") or
+		Pytanie(pytanie == "Will you talk back?", udzielona_odpowiedz == "Yes") or
+		Pytanie(pytanie == "Is he or she trying to sleep with you?", udzielona_odpowiedz == "Yes")
 	then
-		Odpowiedz o = new Odpowiedz("Non-Alcoholic", "opis", "icons/non-alco.png");
+		Odpowiedz o = new Odpowiedz("Non-Alcoholic", "Bartender Mindy Kucan of Anvil, in Houston, says when you don't want booze, ask for an \"adult soda\" - a code word for something akin to a Shirley Temple. \"Most bartenders love to get creative with those\", she says.", "icons/non-alco.png");
 		insert(o);
 end
